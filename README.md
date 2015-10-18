@@ -1,5 +1,7 @@
 # smart-thermostat-WiFi
 
+[![](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/orgs/souliss/rooms#)
+
 Wi-Fi Smart Thermostat based on Souliss IoT Framework
 # Bill of Material:
 -Olimex ESP8266-EVB  
