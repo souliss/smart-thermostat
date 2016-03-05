@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
-#include "t_constants.h"
-#include <Time.h>
+#include "constants.h"
+#include <TimeLib.h>
+#include "read_save.h"
 //NTP
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 unsigned int localPort = 8888;  // local port to listen for UDP packets
@@ -59,7 +60,7 @@ time_t getNtpTime()
       secsSince1900 |= (unsigned long)packetBuffer[41] << 16;
       secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
       secsSince1900 |= (unsigned long)packetBuffer[43];
-      return secsSince1900 - 2208988800UL + timeZone * SECS_PER_HOUR;
+      return secsSince1900 - 2208988800UL + read_eeprom_byte(9) * SECS_PER_HOUR;
     }
   }
   SERIAL_OUT.println("No NTP Response :-(");
@@ -78,17 +79,35 @@ String printDigits(int digits) {
   return s;
 }
 
-
 String digitalClockDisplay() {
+  // digital clock display of the time
+  return printDigits(hour()) + ":" + printDigits(minute()) + ":" + printDigits(second()) +  " " + day() + "/" + month() + "/" + year();
+}
+
+String digitalClockDisplay_simple() {
   // digital clock display of the time
   return printDigits(hour()) + ":" + printDigits(minute());
 }
+
 
 String digitalDataDisplay() {
   // digital clock display of the time
   return printDigits(day()) + "." + (month()) + "." + (year());
 }
 
+//Crono var
+//Day of week  Sunday is day 0 
+int getNTPday(){
+  return weekday();  
+}
+//Hour of day
+int getNTPhour(){
+  return hour();
+}
+//minute of day
+int getNTPminute(){
+  return minute();
+}
 
 void initNTP() {
 
