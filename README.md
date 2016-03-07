@@ -6,6 +6,9 @@ Wi-Fi Smart Thermostat based on Souliss IoT Framework
 Here you have the development version of SST:
 https://github.com/mcbittech/souliss-smart-thermostat-WiFi
 
+Youtube link:
+https://youtu.be/aof8ILJSSf4
+
 # Example of layout 2:
 ![layout2](https://github.com/mcbittech/souliss-smart-thermostat-WiFi/blob/master/Libraries-Core-Docs/layout2_assembled.png?raw=true "layout2")
 
