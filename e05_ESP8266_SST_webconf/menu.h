@@ -6,7 +6,9 @@ void initMenu();
 MenuSystem* getMenu();
 
 boolean getMenuEnabled();
-void setEnabled(boolean);
+void setMenuEnabled();
+void resetMenuEnabled();
+
 boolean getLayout1();
 boolean getLayout2();
 int getDisplayBright();
@@ -21,7 +23,8 @@ boolean getCronoLearn();
 
 boolean getUIChanged();
 boolean getSystemChanged();
-void setChanged();
+void setSystemChanged();
+void setUIChanged();
 void setSystem(boolean bVal);
 void resetUIChanged();
 void resetSystemChanged();
@@ -30,6 +33,9 @@ void resetSystemChanged();
 //void setFlag_initScreen(boolean);
 
 void on_item_ProgCrono_deselected();
+void printMenuBody(Ucglib_ILI9341_18x240x320_HWSPI, boolean);
+void printMenuMove(Ucglib_ILI9341_18x240x320_HWSPI);
 void printMenu(Ucglib_ILI9341_18x240x320_HWSPI);
 void ReadAllSettingsFromEEPROM();
 void ReadAllSettingsFromPreferences();
+void ReadAllSettingsFromSPIFFS();
