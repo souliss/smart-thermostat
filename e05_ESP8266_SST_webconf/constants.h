@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-#define VERSION "v0.85"
-
+#define VERSION "v0.9"
+#define HOSTNAME "SST-Thermostat-OTA-" ///< Hostename. The setup function adds the Chip ID at the end.
 //DHT22
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define DHTPIN 12
@@ -55,13 +55,10 @@
 
 
 //TIMER DISPLAY
-#define TIMER_DISPLAY_SETPOINT 3000
+#define TIMER_DISPLAY_SETPOINT 1500
 
 //AWAY
 #define TEMP_MINUS 1
-
-//EEPROM
-const int offset=500;       //start address for eeprom data save
 
 #define SERIAL_OUT Serial
 
