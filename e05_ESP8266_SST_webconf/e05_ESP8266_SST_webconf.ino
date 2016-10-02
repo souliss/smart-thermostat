@@ -12,7 +12,7 @@
 #include "SoulissFramework.h"
 
 #include <ESP8266WiFi.h>
-//#include <ESP8266WebServer.h>
+#include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <EEPROM.h>
 #include "FS.h" //SPIFFS
@@ -92,7 +92,23 @@ MenuSystem* myMenu;
 // Use hardware SPI
 Ucglib_ILI9341_18x240x320_HWSPI ucg(/*cd=*/ 2 , /*cs=*/ 15);
 
+void EEPROM_Reset() {
+  // Erase network configuration parameters from previous use of ZeroConf
+  SERIAL_OUT.println("Store_Init");
+  Store_Init();
+  SERIAL_OUT.println("Store_Clear");
+  Store_Clear();
+  SERIAL_OUT.println("Store_Commit");
+  Store_Commit();
+  SERIAL_OUT.println("OK");
 
+  // Print the EEPROM contents, if erase has been succesfull you should see only zeros.
+  for (uint16_t i = 0; i < STORE__USABLESIZE; i++)
+    SERIAL_OUT.println(Return_8bit(i));
+
+  spiffs_Reset();
+  ESP.reset();
+}
 
 void subscribeTopics() {
   if (subscribedata(TOPIC1, mypayload, &mypayload_len)) {
@@ -224,6 +240,18 @@ void bright(int lum) {
   analogWrite(BACKLED, val);
 }
 
+void publishHeating_ON_OFF() {
+  //code from Souliss_nDigOut(...
+  //nDigOut(RELE, Souliss_T3n_HeatingOn, SLOT_THERMOSTAT);    // Heater
+
+  if (memory_map[MaCaco_OUT_s + SLOT_THERMOSTAT] & Souliss_T3n_HeatingOn)
+    publishdata(SST_HEAT_ONOFF, &HEAT_ON, 1);
+  else
+    publishdata(SST_HEAT_ONOFF, &HEAT_OFF, 1);
+}
+
+
+
 void setup()
 {
 
@@ -344,11 +372,9 @@ void loop()
             if (getEncoderValue() > encoderValue_prec) {
               //Menu DOWN
               myMenu->next();
-              SERIAL_OUT.println("Menu Down");
             } else {
               //Menu UP
               myMenu->prev();
-              SERIAL_OUT.println("Menu Up");
             }
             printMenuMove(ucg);
             encoderValue_prec = getEncoderValue();
@@ -596,7 +622,8 @@ void loop()
         // Trig the next change of the state
         setSoulissDataChanged();
         SERIAL_OUT.println("Init Screen");
-        initScreen();
+        setUIChanged();
+        //initScreen();
         resetSystemChanged();
       }
     }
@@ -642,8 +669,13 @@ void loop()
 
     SHIFT_910ms(1) {
       subscribeTopics();
+      if (getDoSystemReset()) EEPROM_Reset();
     }
 
+FAST_7110ms(){
+  //PUBLISH MESSAGE WHEN HEATING ON OR OFF
+  publishHeating_ON_OFF();
+}
 
 #if(DYNAMIC_CONNECTION)
     DYNAMIC_CONNECTION_fast();
@@ -663,7 +695,6 @@ void loop()
         setEncoderValue(checkNTPcrono(ucg));
         Serial.print("CRONO: setpoint: "); Serial.println(setpoint);
       }
-
 
       switch (SSTPage.actualPage) {
         case PAGE_HOME:
@@ -685,8 +716,6 @@ void loop()
           }
       }
     }
-
-
 
     SLOW_70s() {
       switch (SSTPage.actualPage) {
