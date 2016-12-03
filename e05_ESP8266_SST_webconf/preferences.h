@@ -2,12 +2,12 @@
 
 //LAYOUT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define LAYOUT_LINEAR 0
-#define LAYOUT_CIRCULAR 1
+#define LAYOUT_LINEAR 1
+#define LAYOUT_CIRCULAR 0
 
 //LOCAL CRONO FUNCTION
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define CRONO 1
+#define CRONO 0
 #define CRONOLEARN 0
 
 //CLOCK
@@ -58,7 +58,7 @@
 //Only for DYNAMIC_CONNECTION = 0
 #define peer_address  0xAB21
 #define myvNet_subnet 0xFF00
-#define wifi_bridge_address    0xAB01 //gateway
+#define wifi_bridge_address    0xAB10 //gateway
 
 
 //TOPICS PUBLISH&SUBSCRIBE
@@ -91,7 +91,7 @@
 #define C4_AREA_TEXT " topic"
 #define C4_AREA_TEXT_COLOR_LAYOUT2() ucg.setColor(255, 0, 0); //red
 
-#define C5_COLOR()  ucg.setColor(255, 255, 255);    // White
+#define C5_COLOR()  ucg.setColor(255, 255, 255);     // White
 #define C5_AREA_UNITY "'"
 #define C5_AREA_TEXT " topic"
 #define C5_AREA_TEXT_COLOR_LAYOUT2() ucg.setColor(255, 0, 0); //red
