@@ -552,6 +552,7 @@ void loop()
               setUIChanged();
               menu = 0;
             }
+            yield(); //cdj mod suggested by Flavio to eliminate reset during progcrono (wifi bug)
           }
           //restore encoder value
           setEncoderValue(setpoint);
