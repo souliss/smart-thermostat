@@ -7,7 +7,7 @@
 
 //LOCAL CRONO FUNCTION
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define CRONO 0
+#define CRONO 1
 #define CRONOLEARN 0
 
 //CLOCK
@@ -50,15 +50,15 @@
 // **** Define the WiFi name and password ****
 //Only for DYNAMIC_CONNECTION = 0
 #define WIFICONF_INSKETCH
-#define WiFi_SSID               "asterix"
-#define WiFi_Password           "ttony2013"  
+#define WiFi_SSID               "*** toConfigure ***"
+#define WiFi_Password           "*** toConfigure ***"   
 
 // Define the network configuration according to your router settingsuration according to your router settings
 // and the other on the wireless oneless one
 //Only for DYNAMIC_CONNECTION = 0
 #define peer_address  0xAB21
 #define myvNet_subnet 0xFF00
-#define wifi_bridge_address    0xAB10 //gateway
+#define wifi_bridge_address    0xAB01 //gateway
 
 
 //TOPICS PUBLISH&SUBSCRIBE
@@ -100,5 +100,4 @@
 #define C6_AREA_UNITY "'"
 #define C6_AREA_TEXT " topic"
 #define C6_AREA_TEXT_COLOR_LAYOUT2() ucg.setColor(255, 0, 0); //red
-
 
